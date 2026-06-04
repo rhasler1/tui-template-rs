@@ -1,30 +1,40 @@
-use ratatui::prelude::{Frame,Layout,Direction,Constraint,Alignment,Style,Span,Color};
-use ratatui::widgets::Paragraph;
+use ratatui::prelude::{Frame,Layout,Constraint,Span};
+
+use crate::config::Config;
+use crate::events::Key;
 
 pub struct App {
-    message: String
+    message: String,
+    exit_key: Key
 }
 
 impl App {
-    pub fn default() -> Self {
-        let message: String = String::from("Hello, press 'q' or left click to exit.");
+    pub fn with_config(config: &Config) -> Self {   
         Self {
-            message
+            message: String::from("Hello"),
+            exit_key: config.key_config.exit.clone()
         }
     }
 
     pub fn draw(&mut self, frame: &mut Frame) -> anyhow::Result<()> {
-        let chunks = Layout::default()
-            .direction(Direction::Vertical)
-            .constraints([
-                Constraint::Min(1)
-            ])
-            .split(frame.size());
-        
-        let span = Span::styled(self.message.clone(), Style::new().fg(Color::Green));
-        let paragraph = Paragraph::new(span).alignment(Alignment::Center);
-        frame.render_widget(paragraph, chunks[0]);
-
+        let height = frame.size().height as usize;
+        let constraints: Vec<Constraint> = vec![Constraint::Length(1); height];
+        let row_chunks = Layout::vertical(constraints).split(frame.size());
+        for (i, &chunk) in row_chunks.iter().enumerate() {
+            let text = format!("This is horizontal row #{}", i);
+            let span = Span::raw(text);
+            frame.render_widget(span, chunk);
+        }
         Ok(())
+    }
+}
+
+impl Default for App {
+    fn default() -> Self {
+        let message: String = String::from("Hello, press 'q' or left click to exit.");
+        Self {
+            message,
+            exit_key: Key::Esc
+        }
     }
 }
