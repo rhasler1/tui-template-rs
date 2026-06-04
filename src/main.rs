@@ -1,11 +1,10 @@
 use rust_tui_template::app::App;
 use rust_tui_template::cli::Args;
 use rust_tui_template::config::{Config, setup_config_file};
-use rust_tui_template::events::event::{Event, Events};
-
+use rust_tui_template::events::{Event, Events};
 use rust_tui_template::terminal::{setup_terminal, restore_terminal};
-use ratatui::{backend::Backend, Terminal};
 
+use ratatui::{backend::Backend, Terminal};
 use std::{time::Duration, thread::sleep};
 use anyhow::Result;
 use log::{info, debug, error};
