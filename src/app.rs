@@ -6,13 +6,6 @@ pub struct App {
 }
 
 impl App {
-    pub fn default() -> Self {
-        let message: String = String::from("Hello, press 'q' or left click to exit.");
-        Self {
-            message
-        }
-    }
-
     pub fn draw(&mut self, frame: &mut Frame) -> anyhow::Result<()> {
         let chunks = Layout::default()
             .direction(Direction::Vertical)
@@ -26,5 +19,14 @@ impl App {
         frame.render_widget(paragraph, chunks[0]);
 
         Ok(())
+    }
+}
+
+impl Default for App {
+    fn default() -> Self {
+        let message: String = String::from("Hello, press 'q' or left click to exit.");
+        Self {
+            message
+        }
     }
 }
