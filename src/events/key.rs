@@ -1,10 +1,6 @@
-// Crossterm event => application input
 use crossterm::event::{
     KeyEvent,
-    KeyCode,
-    //MouseEvent,
-    //MouseEventKind,
-    //MouseButton
+    KeyCode
 };
 use serde::{Deserialize, Serialize};
 
@@ -19,6 +15,7 @@ pub enum Key {
     Left,
     Right,
     Tab,
+    F(u8),
     Unknown
 }
 
@@ -34,6 +31,7 @@ impl From<KeyEvent> for Key {
             KeyCode::Left       => Key::Left,
             KeyCode::Right      => Key::Right,
             KeyCode::Tab        => Key::Tab,
+            KeyCode::F(n)       => Key::F(n),
             _                   => Key::Unknown
         }
     }

@@ -1,11 +1,12 @@
 use crossterm::event::Event as CrosstermEvent;
-use crate::events::key::Key;
+use crate::events::Key;
 
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum Event {
     Key(Key),
     Paste(String),
+    Resize(u16, u16),
     Tick,
     Unknown
 }
@@ -21,6 +22,7 @@ impl From<CrosstermEvent> for Event {
                 }
             },
             CrosstermEvent::Paste(data) => Event::Paste(data),
+            CrosstermEvent::Resize(col, row) => Event::Resize(col, row),
             _ => Event::Unknown
         }
     }
