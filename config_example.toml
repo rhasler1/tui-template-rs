@@ -1,0 +1,8 @@
+event_mpsc_channel_capacity = 16
+
+[event_tick_rate]
+secs = 0
+nanos = 248000000
+
+[key_config]
+exit = "Esc"
